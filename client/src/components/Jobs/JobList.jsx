@@ -1,17 +1,24 @@
 // src/components/Jobs/JobList.js
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+// import { fetchJobListings } from "../../services/jobBoardApi";
+import axios from "axios";
+
+const token = "******";
 
 const JobList = () => {
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState({});
 
   useEffect(() => {
-    const fetchJobs = async () => {
-      const response = await axios.get("/api/jobs");
-      setJobs(response.data);
-    };
-    fetchJobs();
+    axios
+      .get("https://job-board-api-production.up.railway.app/api/v1/#/jobs", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setJobs(response.data);
+      })
+
+      .catch((error) => console.error("Error fetching jobs: ", error));
   }, []);
 
   return (

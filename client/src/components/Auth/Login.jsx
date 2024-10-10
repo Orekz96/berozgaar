@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../services/api";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -19,11 +19,19 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post("/api/login", credentials);
-      const { user, token } = response.data;
+      const response = await loginUser(credentials.email, credentials.password);
+      console.log(response.data);
+      const { user, access_token } = response.data;
+
+      // Check if user or token is undefined
+      if (!user || !access_token) {
+        setError("Login failed. Please try again.");
+        return;
+      }
 
       login(user); // Save user in context
-      localStorage.setItem("token", token); // Save token for persistence
+      console.log(access_token);
+      localStorage.setItem("token", access_token); // Save token for persistence
 
       // Redirect based on user role
       if (user.role === "jobseeker") {
@@ -95,7 +103,7 @@ const Login = () => {
           </button>
         </form>
         <p className="mt-4 text-center text-sm text-gray-600">
-          Don't have an account?{" "}
+          Don`&apos;`t have an account?{" "}
           <a href="/register" className="text-indigo-600 hover:text-indigo-700">
             Register here
           </a>

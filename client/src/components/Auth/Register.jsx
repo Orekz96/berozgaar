@@ -1,21 +1,23 @@
-import React, { useState } from "react";
-import axios from "axios";
+import { useState } from "react";
+import { signUpUser } from "../../services/api";
 
 const Register = () => {
   const [userData, setUserData] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
-    role: "jobseeker", // Can be 'employer'
+    role: "job_seeker", // Can be 'employer'
   });
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/register", userData);
+      const response = await signUpUser(userData);
+      console.log("Registration successful", response);
+
       // Handle registration logic here (e.g., redirect to login)
     } catch (err) {
-      console.error(err);
+      console.error("Registration Failed:", err.response.data);
     }
   };
 
@@ -30,9 +32,9 @@ const Register = () => {
             </label>
             <input
               type="text"
-              value={userData.name}
+              value={userData.username}
               onChange={(e) =>
-                setUserData({ ...userData, name: e.target.value })
+                setUserData({ ...userData, username: e.target.value })
               }
               placeholder="John Doe"
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"

@@ -1,6 +1,8 @@
 // src/components/Jobs/JobSearch.js
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
+
+const token = "******";
 
 const JobSearch = () => {
   const [searchCriteria, setSearchCriteria] = useState({
@@ -17,9 +19,13 @@ const JobSearch = () => {
   const handleSearch = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get("/api/jobs", {
-        params: searchCriteria,
-      });
+      const response = await axios.get(
+        "https://job-board-api-production.up.railway.app/api/v1/#/search",
+        {
+          params: searchCriteria,
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setResults(response.data);
     } catch (err) {
       console.error("Search error:", err);

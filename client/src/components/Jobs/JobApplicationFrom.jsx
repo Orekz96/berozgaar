@@ -1,5 +1,5 @@
 // src/components/Jobs/JobApplicationForm.js
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -25,9 +25,13 @@ const JobApplicationForm = () => {
     formData.append("resume", applicationData.resume);
 
     try {
-      await axios.post(`/api/jobs/${id}/apply`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      await axios.post(
+        `https://job-board-api-production.up.railway.app/api/v1/#/jobs/${id}/apply`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
       alert("Application submitted successfully!");
     } catch (err) {
       console.error("Application submission error:", err);

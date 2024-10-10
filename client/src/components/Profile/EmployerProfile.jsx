@@ -1,5 +1,5 @@
 // src/components/Profile/EmployerProfile.js
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
@@ -17,7 +17,10 @@ const EmployerProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/employer/${user.id}/profile`, profileData);
+      await axios.put(
+        `https://job-board-api-production.up.railway.app/api/v1/#/jobs/employer/${user.id}/profile`,
+        profileData
+      );
       alert("Profile updated successfully!");
     } catch (err) {
       console.error("Profile update error:", err);

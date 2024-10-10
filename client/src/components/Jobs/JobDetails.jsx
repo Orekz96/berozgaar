@@ -1,7 +1,7 @@
 // src/components/Jobs/JobDetails.js
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+// import { fetchJobById } from "../../services/jobBoardApi";
 
 const JobDetails = () => {
   const { id } = useParams();
@@ -9,7 +9,7 @@ const JobDetails = () => {
 
   useEffect(() => {
     const fetchJobDetails = async () => {
-      const response = await axios.get(`/api/jobs/${id}`);
+      const response = await fetchJobById();
       setJob(response.data);
     };
     fetchJobDetails();

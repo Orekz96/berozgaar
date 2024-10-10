@@ -1,5 +1,5 @@
 // src/components/Home/HowOurWebsiteWorks.jsx
-import React from "react";
+
 import { FaUserPlus, FaUpload, FaSearch, FaCheck } from "react-icons/fa";
 
 const HowOurWebsiteWorks = () => {
